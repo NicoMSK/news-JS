@@ -1,4 +1,5 @@
 import './news.css';
+import * as util from '../util';
 
 type NewsItem = {
     author: string;
@@ -11,20 +12,12 @@ type NewsItem = {
     urlToImage: string;
 };
 
-function safetyQuery<T extends Element>(queryString: string): T {
-    const result = document.querySelector<T>(queryString);
-    if (!result) {
-        throw new Error('отсутствует шаблон для новости');
-    }
-    return result;
-}
-
 class News {
     draw(data: NewsItem[]) {
         const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
         const fragment = document.createDocumentFragment();
-        const newsItemTemp = safetyQuery<HTMLTemplateElement>('#newsItemTemp');
+        const newsItemTemp = util.safetyQuery<HTMLTemplateElement>('#newsItemTemp');
 
         news.forEach((item, idx) => {
             const newsClone = newsItemTemp.content.cloneNode(true) as Element;
