@@ -23,13 +23,17 @@ class Sources {
                 throw new Error('отсутствует шаблон для ресурса');
             }
 
-            sourceClone.querySelector('.source__item-name')!.textContent = item.name;
-            sourceClone.querySelector('.source__item')!.setAttribute('data-source-id', item.id);
+            const sourceItemName = util.safetyQuery<HTMLSpanElement>('.source__item-name');
+            sourceItemName.textContent = item.name;
+
+            const sourceItemDiv = util.safetyQuery<HTMLDivElement>('.source__item');
+            sourceItemDiv.setAttribute('data-source-id', item.id);
 
             fragment.append(sourceClone);
         });
 
-        document.querySelector('.sources')!.append(fragment);
+        const sourcesDiv = util.safetyQuery<HTMLDivElement>('.sources');
+        sourcesDiv.append(fragment);
     }
 }
 
