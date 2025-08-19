@@ -7,6 +7,5 @@ class AppLoader extends Loader {
         });
     }
 }
-console.log('ENV:', process.env.API_URL, process.env.API_KEY);
 
 export default AppLoader;
