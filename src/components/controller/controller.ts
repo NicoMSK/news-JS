@@ -1,7 +1,42 @@
 import AppLoader from './appLoader';
 
+type ArticleValues = {
+    author: string;
+    content: string;
+    description: string;
+    publishedAt: string;
+    source: {
+        id: string;
+        name: string;
+    };
+    title: string;
+    url: string;
+    urlToImage: string;
+};
+
+type Source = {
+    category: string;
+    country: string;
+    description: string;
+    id: string;
+    language: string;
+    name: string;
+    url: string;
+};
+
+type DataObject = {
+    status: string;
+    totalResults: number;
+    articles: ArticleValues[];
+};
+
+type DataSources = {
+    sources: Source[];
+    status: string;
+};
+
 class AppController extends AppLoader {
-    getSources(callback: () => void) {
+    getSources(callback: (data: DataSources) => void) {
         super.getResp(
             {
                 endpoint: 'sources',
@@ -10,7 +45,7 @@ class AppController extends AppLoader {
         );
     }
 
-    getNews(e: PointerEvent, callback: () => void) {
+    getNews(e: PointerEvent, callback: (data: DataObject) => void) {
         let target = e.target as HTMLElement;
         const newsContainer = e.currentTarget as HTMLElement;
 

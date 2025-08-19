@@ -15,13 +15,24 @@ type ArticleValues = {
     urlToImage: string;
 };
 
+type Source = {
+    category: string;
+    country: string;
+    description: string;
+    id: string;
+    language: string;
+    name: string;
+    url: string;
+};
+
 type DataObject = {
     status: string;
     totalResults: number;
     articles: ArticleValues[];
 };
+
 type DataSources = {
-    sources: Array[];
+    sources: Source[];
     status: string;
 };
 
