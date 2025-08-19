@@ -1,8 +1,4 @@
-type LoaderOptions = { apiKey: string };
-
-type OptionsObject = {
-    apiKey?: string;
-};
+type LoaderOptions = { apiKey?: string };
 
 class Loader {
     baseLink: string;
@@ -14,7 +10,7 @@ class Loader {
     }
 
     getResp(
-        { endpoint, options = {} }: { endpoint: string; options: object },
+        { endpoint, options = {} }: { endpoint: string; options?: object },
         callback = () => {
             console.error('No callback for GET response');
         }
@@ -32,12 +28,12 @@ class Loader {
         return res;
     }
 
-    makeUrl(options: OptionsObject, endpoint: string) {
-        const urlOptions: OptionsObject = { ...this.options, ...options };
+    makeUrl(options: LoaderOptions, endpoint: string) {
+        const urlOptions: LoaderOptions = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
 
         Object.keys(urlOptions).forEach((key) => {
-            const optionKey = key as keyof OptionsObject;
+            const optionKey = key as keyof LoaderOptions;
             url += `${optionKey}=${urlOptions[optionKey]}&`;
         });
 
