@@ -2,6 +2,12 @@ import AppController from '../controller/controller';
 import { AppView } from '../view/appView';
 import * as util from '../view/util';
 
+type DataObject = {
+    status: string;
+    totalResults: number;
+    articles: object[];
+};
+
 class App {
     controller: AppController;
     view: AppView;
@@ -12,10 +18,12 @@ class App {
     }
 
     start() {
-        // debugger;
         const sourcesDiv = util.safetyQuery<HTMLDivElement>('.sources');
-        sourcesDiv.addEventListener('click', (e) => this.controller.getNews(e, (data) => this.view.drawNews(data)));
-        this.controller.getSources((data) => this.view.drawSources(data));
+        sourcesDiv.addEventListener('click', (e) =>
+            this.controller.getNews(e, (data: DataObject) => this.view.drawNews(data))
+        );
+
+        this.controller.getSources((data: DataObject) => this.view.drawSources(data));
     }
 }
 

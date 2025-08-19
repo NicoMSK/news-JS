@@ -11,17 +11,6 @@ type SourcesItem = {
     url: string;
 };
 
-/// делаю настройку темы
-type settings = {
-    category: string;
-    country: number;
-    description: object;
-    id: Array[];
-    language: boolean;
-    name: string;
-    url: string;
-};
-
 class Sources {
     draw(data: Array<SourcesItem>) {
         const fragment = document.createDocumentFragment();
