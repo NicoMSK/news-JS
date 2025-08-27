@@ -1,11 +1,12 @@
-type LoaderOptions = { apiKey?: string };
+type LoaderConstructorParams = { apiUrl: string; apiKey?: string };
+type LoaderOptions = Omit<LoaderConstructorParams, 'apiUrl'>;
 
 class Loader {
     baseLink: string;
     options: LoaderOptions;
 
-    constructor(baseLink: string, options: LoaderOptions) {
-        this.baseLink = baseLink;
+    constructor(options: LoaderConstructorParams) {
+        this.baseLink = options.apiUrl;
         this.options = options;
     }
 
@@ -32,9 +33,8 @@ class Loader {
         const urlOptions: LoaderOptions = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
 
-        Object.keys(urlOptions).forEach((key) => {
-            const optionKey = key as keyof LoaderOptions;
-            url += `${optionKey}=${urlOptions[optionKey]}&`;
+        Object.entries(urlOptions).forEach(([key, value]) => {
+            url += `${key}=${value}&`;
         });
 
         return url.slice(0, -1);

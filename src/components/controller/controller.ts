@@ -1,42 +1,10 @@
 import AppLoader from './appLoader';
+import type * as Types from '../types';
 
-type ArticleValues = {
-    author: string;
-    content: string;
-    description: string;
-    publishedAt: string;
-    source: {
-        id: string;
-        name: string;
-    };
-    title: string;
-    url: string;
-    urlToImage: string;
-};
-
-type Source = {
-    category: string;
-    country: string;
-    description: string;
-    id: string;
-    language: string;
-    name: string;
-    url: string;
-};
-
-type DataObject = {
-    status: string;
-    totalResults: number;
-    articles: ArticleValues[];
-};
-
-type DataSources = {
-    sources: Source[];
-    status: string;
-};
+type Callback<T> = (data: T) => void;
 
 class AppController extends AppLoader {
-    getSources(callback: (data: DataSources) => void) {
+    getSources(callback: Callback<Types.SourcesResponse>) {
         super.getResp(
             {
                 endpoint: 'sources',
@@ -45,7 +13,7 @@ class AppController extends AppLoader {
         );
     }
 
-    getNews(e: PointerEvent, callback: (data: DataObject) => void) {
+    getNews(e: PointerEvent, callback: Callback<Types.NewsResponse>) {
         let target = e.target as HTMLElement;
         const newsContainer = e.currentTarget as HTMLElement;
 
@@ -57,7 +25,7 @@ class AppController extends AppLoader {
                 if (!sourceId) return;
                 if (newsContainer.getAttribute('data-source') !== sourceId) {
                     newsContainer.setAttribute('data-source', sourceId);
-                    super.getResp(
+                    this.getResp(
                         {
                             endpoint: 'everything',
                             options: {

@@ -13,13 +13,13 @@ type NewsItem = {
 };
 
 class News {
-    draw(data: NewsItem[]) {
-        const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
+    draw(news: NewsItem[]) {
+        const normalizedNews = news.slice(0, 10);
 
         const fragment = document.createDocumentFragment();
         const newsItemTemp = util.safetyQuery<HTMLTemplateElement>('#newsItemTemp');
 
-        news.forEach((item, idx) => {
+        normalizedNews.forEach((item, idx) => {
             const newsClone = newsItemTemp.content.cloneNode(true) as Element;
 
             if (idx % 2) newsClone.querySelector('.news__item')!.classList.add('alt');
@@ -27,6 +27,7 @@ class News {
             newsClone.querySelector<HTMLDivElement>('.news__meta-photo')!.style.backgroundImage = `url(${
                 item.urlToImage || 'img/news_placeholder.jpg'
             })`;
+
             newsClone.querySelector('.news__meta-author')!.textContent = item.author || item.source.name;
             newsClone.querySelector('.news__meta-date')!.textContent = item.publishedAt
                 .slice(0, 10)

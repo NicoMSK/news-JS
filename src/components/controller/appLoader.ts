@@ -9,9 +9,7 @@ class AppLoader extends Loader {
             throw new Error(`${apiUrl} или ${apiKey} не определены в переменных окружения`);
         }
 
-        super(apiUrl, {
-            apiKey: apiKey,
-        });
+        super({ apiUrl, apiKey });
     }
 }
 
